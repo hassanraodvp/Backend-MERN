@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD with EJS</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <style>
+    input {
+      width: 100%;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+      outline: none;
+      margin: 5px 0;
+    }
+  </style>
+  <body>
+    <section class="min-h-screen bg-black text-white">
+      <div class="container" style="margin: 0 auto">
+        <div class="pt-5">
+            <a href="/read" class="underline text-white hover:text-gray-300 underline-offset-5">Update Users >></a>
+        </div>
+        <div class="flex justify-center pt-10">
+          <form
+            action="/update/<%= user._id %>"
+            method="post"
+            class="w-[90%] md:w-1/3 bg-white text-black rounded-lg flex flex-col"
+            style="padding: 10px 30px 20px 30px;"
+          >
+          <h1 class="text-center text-3xl font-bold py-5">Update Users</h1>
+            <label for="name">Name</label>
+            <input
+              type="text"
+              name="name"
+              value="<%= user.name %>"
+              placeholder="Enter Your Name"
+              required
+            />
+            <label for="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              value="<%= user.email %>"
+              placeholder="Enter Your Email"
+              required
+            />
+            <label for="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              value="<%= user.password %>"
+              placeholder="Enter Your Password"
+              required
+            />
+            <label for="image">Image URL</label>
+            <input
+              name="image"
+              value="<%= user.image %>"
+              name="image"
+              placeholder="Enter Your Image URL"
+              required
+            />
+            <button
+              type="submit"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-5 rounded cursor-pointer"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
