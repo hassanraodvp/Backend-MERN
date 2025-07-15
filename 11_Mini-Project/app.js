@@ -20,6 +20,24 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
+app.get("/profile", isLoggedIn, async (req, res) => {
+  let user = await userModel.findOne({email: req.user.email}).populate("post");
+  res.render("profile", { user });
+});
+
+app.post("/post", isLoggedIn, async (req, res) => {
+  let user = await userModel.findOne({email: req.user.email});
+  let {title, content} = req.body;
+  let post = await postModel.create({
+    author: user._id,
+    title,
+    content
+  });
+  user.post.push(post._id);
+  await user.save();
+  res.redirect("/profile")
+});
+
 app.post("/register", async (req, res) => {
   let { name, username, email, password } = req.body;
   let user = await userModel.findOne({ email });
@@ -50,7 +68,11 @@ app.post("/login", async (req, res) => {
   if (!user) return res.status(400).send("Invalid Credential");
   bcrypt.compare(password, user.password, (err, result) => {
     if (result) {
-      res.status(200).send("You can login");
+      let token = jwt.sign({ email: email, userid: user._id }, "secret", {
+        expiresIn: "1h",
+      });
+      res.cookie("token", token);
+      res.status(200).redirect("/profile")
     } else {
       res.redirect("/login");
     }
@@ -59,8 +81,21 @@ app.post("/login", async (req, res) => {
 
 app.get("/logout", (req, res) => {
   res.cookie("token", "");
-  res.redirect("/login")
+  res.redirect("/login");
 });
+
+function isLoggedIn(req, res, next) {
+  if (!req.cookies.token || req.cookies.token === "") {
+    return res.redirect("/login");
+  }
+  try {
+    let data = jwt.verify(req.cookies.token, "secret");
+    req.user = data;
+    next();
+  } catch (err) {
+    return res.send("Invalid Token");
+  }
+}
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
