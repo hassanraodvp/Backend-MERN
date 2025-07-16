@@ -21,22 +21,44 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/profile", isLoggedIn, async (req, res) => {
-  let user = await userModel.findOne({email: req.user.email}).populate("post");
+  let user = await userModel
+    .findOne({ email: req.user.email })
+    .populate("post");
   res.render("profile", { user });
 });
 
 app.post("/post", isLoggedIn, async (req, res) => {
-  let user = await userModel.findOne({email: req.user.email});
-  let {title, content} = req.body;
+  let user = await userModel.findOne({ email: req.user.email });
+  let { title, content } = req.body;
   let post = await postModel.create({
     author: user._id,
     title,
-    content
+    content,
   });
   user.post.push(post._id);
   await user.save();
-  res.redirect("/profile")
+  res.redirect("/profile");
 });
+
+app.get("/edit/:id", isLoggedIn, async (req, res) => {
+  let post = await postModel.findOne({ _id: req.params.id });
+  res.render("edit", { post });
+});
+
+app.post("/update/:id", isLoggedIn, async (req, res) => {
+  let post = await postModel.findOneAndUpdate({ _id: req.params.id });
+  let { title, content } = req.body;
+  post.title = title;
+  post.content = content;
+  await post.save();
+  res.redirect("/profile");
+});
+
+app.get("/delete/:id", async (req, res) => {
+    let id = req.params.id;
+    let post = await postModel.findByIdAndDelete(id);
+    res.redirect('/profile');
+})
 
 app.post("/register", async (req, res) => {
   let { name, username, email, password } = req.body;
@@ -72,7 +94,7 @@ app.post("/login", async (req, res) => {
         expiresIn: "1h",
       });
       res.cookie("token", token);
-      res.status(200).redirect("/profile")
+      res.status(200).redirect("/profile");
     } else {
       res.redirect("/login");
     }
