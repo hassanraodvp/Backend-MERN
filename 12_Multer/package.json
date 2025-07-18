@@ -1,5 +1,5 @@
 {
-  "name": "11_mini-project",
+  "name": "12_multer",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -10,12 +10,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "bcrypt": "^6.0.0",
-    "cookie-parser": "^1.4.7",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.16.3",
     "multer": "^2.0.2"
   }
 }

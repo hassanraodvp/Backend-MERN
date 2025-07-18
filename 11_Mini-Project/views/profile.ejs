@@ -17,7 +17,8 @@
           <h2 class="text-3xl font-extrabold text-center text-gray-800 mb-6">
             User Profile
           </h2>
-          <div class="flex items-end justify-end">
+          <div class="flex items-center justify-between">
+            <a href="/profile/upload" class="underline underline-offset-5 text-blue-500">Upload Profile Pic</a>
             <!-- Logout Button -->
             <a
               href="/logout"
@@ -27,9 +28,16 @@
           </div>
           <div class="flex flex-column">
             <div class="space-y-3">
-              <h3 class="text-2xl font-semibold text-gray-800">
-                <span class="font-bold">Name: </span><%= user.name %>
-              </h3>
+              <div class="flex justify-between items-center mt-5">
+                <h3 class="text-2xl font-semibold text-gray-800">
+                  <span class="font-bold">Name: </span><%= user.name %>
+                </h3>
+                <img
+                  src="/images/uploads/<%= user.profilePic %>"
+                  alt="Profile Picture"
+                  class="w-10 h-10 rounded-full object-cever"
+                />
+              </div>
               <form method="post" action="/post">
                 <!-- Title -->
                 <div>

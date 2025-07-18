@@ -5,6 +5,10 @@ const userSchema = new mongoose.Schema({
   username: String,
   email: String,
   password: String,
+  profilePic: {
+    type: String,
+    default: "default.jpg",
+  },
   post: [
     {
       type: mongoose.Schema.Types.ObjectId,

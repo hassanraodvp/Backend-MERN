@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mini - Project</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body
+    class="min-h-screen bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center p-4"
+  >
+    <div class="bg-white shadow-xl rounded-2xl w-full max-w-md p-6 sm:p-8">
+      <h2 class="text-3xl font-extrabold text-center text-gray-800 mb-6">
+        Upload a File
+      </h2>
+      <form
+        action="/upload"
+        method="post"
+        class="space-y-5"
+        enctype="multipart/form-data"
+      >
+        <div class="relative">
+          <label
+            title="Click to upload"
+            for="file"
+            class="cursor-pointer flex items-center gap-4 px-6 py-4 before:border-gray-400/60 hover:before:border-gray-300 group before:bg-gray-100 before:absolute before:inset-0 before:rounded-3xl before:border before:border-dashed before:transition-transform before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95"
+          >
+            <div class="w-max relative">
+              <img
+                class="w-12"
+                src="https://www.svgrepo.com/show/485545/upload-cicle.svg"
+                alt="file upload icon"
+                width="512"
+                height="512"
+              />
+            </div>
+            <div class="relative">
+              <span
+                class="block text-base font-semibold relative text-blue-900 group-hover:text-blue-500"
+              >
+                Upload a file
+              </span>
+              <span class="mt-0.5 block text-sm text-gray-500">Max 2 MB</span>
+            </div>
+          </label>
+          <input hidden="" type="file" name="image" id="file" />
+        </div>
+
+        <!-- Submit Button -->
+        <input
+          type="submit"
+          value="Upload"
+          class="w-full cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg shadow-md transition-all duration-200"
+        />
+
+        <!-- Login Redirect -->
+        <!-- <p class="text-center text-sm text-gray-600 mt-4">
+          Already have an account?
+          <a href="/login" class="text-blue-600 font-medium hover:underline"
+            >Login</a
+          >
+        </p> -->
+      </form>
+    </div>
+  </body>
+</html>

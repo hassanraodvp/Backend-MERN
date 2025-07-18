@@ -5,15 +5,42 @@ const userModel = require("./models/user");
 const postModel = require("./models/post");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const crypto = require("crypto")
 const path = require("path");
 const cookieParser = require("cookie-parser");
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.render("index");
+});
+
+app.get("/profile/upload", (req, res) => {
+  res.render("img");
+});
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./public/images/uploads");
+  },
+  filename: function (req, file, cb) {
+    crypto.randomBytes(12, (err, bytes) => {
+      const fn = bytes.toString("hex") + path.extname(file.originalname);
+      cb(null, fn);
+    });
+  },
+});
+const upload = multer({ storage: storage });
+
+app.post("/upload", isLoggedIn , upload.single("image"), async (req, res) => {
+  let user = await userModel.findOne({ email: req.user.email });
+  user.profilePic = req.file.filename;
+  await user.save();
+  res.redirect("/profile")
 });
 
 app.get("/login", (req, res) => {
@@ -55,10 +82,10 @@ app.post("/update/:id", isLoggedIn, async (req, res) => {
 });
 
 app.get("/delete/:id", async (req, res) => {
-    let id = req.params.id;
-    let post = await postModel.findByIdAndDelete(id);
-    res.redirect('/profile');
-})
+  let id = req.params.id;
+  let post = await postModel.findByIdAndDelete(id);
+  res.redirect("/profile");
+});
 
 app.post("/register", async (req, res) => {
   let { name, username, email, password } = req.body;
