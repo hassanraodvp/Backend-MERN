@@ -7,6 +7,10 @@
 /9_Authentication-Authorization/node_modules/
 /10_Data-Association_MongoDB/node_modules/
 /11_Mini-Project/node_modules/
+<<<<<<< HEAD
 /12_Multer/node_modules/
 /13_Mega-Project/Frontend/node_modules/
 /13_Mega-Project/Backend/node_modules/
+=======
+/12_Multer/node_modules/
+>>>>>>> efac7711b4b4685d43ef59351975edd61ea93682
