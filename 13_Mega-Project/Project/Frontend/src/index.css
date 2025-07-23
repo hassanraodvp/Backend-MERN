@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1b3c53;
+  --color-secondary: #456882;
+  --color-heading: #d2c1b6;
+  --color-white: #f8f8f8;
+}
+
+@media only screen and (max-width: 1350px) {
+    .container {
+        padding: 0 25px !important;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .container {
+        padding: 0 15px !important;
+    }
+}
+
+.container {
+    margin: auto;
+}

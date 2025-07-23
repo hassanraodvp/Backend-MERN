@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EJS</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <style>
+    a:hover {
+    color: white;
+    }
+  </style>
+  <body>
+    <section class="min-h-screen bg-black text-white">
+      <div class="container" style="margin: auto">
+        <div style="padding-top: 20px;">
+          <a
+            href="/"
+            class="font-bold text-red-600 underline underline-offset-5 duration-300"
+            ><< Go Back To Home</a
+          >
+        </div>
+        <div style="padding: 15px 10px">
+          <h1 class="text-2xl font-bold tracking-wide">Filename: <%= filename %></h1>
+          <p style="padding-top: 10px;"> <span  class="tracking-wide font-bold">Message: </span> <%= data %></p>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
