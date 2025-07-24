@@ -7,6 +7,8 @@ import Signup from "./Authetication/signup";
 // Pages
 const Home = lazy(() => import("./pages/Home"));
 const Product = lazy(() => import("./pages/Product"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
 
 const routing = createBrowserRouter([
   {
@@ -20,6 +22,14 @@ const routing = createBrowserRouter([
       {
         path: "products",
         element: <Product />,
+      },
+      {
+        path: "about",
+        element: <About />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
       },
     ],
   },

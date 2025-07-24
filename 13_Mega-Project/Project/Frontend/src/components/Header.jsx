@@ -1,100 +1,152 @@
-import React, { useState } from "react";
-import { FaBarsStaggered } from "react-icons/fa6";
-import { IoClose } from "react-icons/io5";
-import { FaOpencart } from "react-icons/fa";
+import { useState, useRef, useEffect } from "react";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { IoMdClose } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { BsHandbag } from "react-icons/bs";
 import navLogo from "../assets/logo/nav_logo.svg";
+import { IoSearchOutline } from "react-icons/io5";
 
 const navItems = [
-  { name: "Home", path: "/" },
-  { name: "Products", path: "/products" },
+  { name: "Home", to: "/" },
+  { name: "About", to: "/about" },
+  { name: "Products", to: "/products" },
+  { name: "Contact", to: "/contact" },
 ];
 
-const Header = () => {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const toggleMobileMenu = () => setMobileOpen(!mobileOpen);
+function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const buttonRef = useRef(null);
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const handleDropdown = () => setIsDropdownOpen((prev) => !prev);
+
+  // Close dropdown if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        !buttonRef.current.contains(event.target)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
-    <section className="bg-[#302c42] overflow-hidden px-4 md:px-8 mb-5">
-      <header className="flex mx-auto justify-between items-center max-w-[1300px] py-4">
-        {/* Logo */}
-        <div className="flex items-center gap-3">
-          <Link to="/">
-            <figure>
-              <img
-                src={navLogo}
-                alt="nav_Logo"
-                className="w-8 md:w-20 bg-white p-1 md:p-3 rounded-full cursor-pointer"
-              />
-            </figure>
-          </Link>
-        </div>
+    <>
+      <header className="fixed inset-x-0 top-0 z-30 mx-auto w-full max-w-screen py-5 border-b border-gray-400">
+        <div className="px-6">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <Link className="flex items-center" to="/">
+              <img className="h-10 w-auto" src={navLogo} alt="Logo" />
+            </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden sm:inline-block">
-          <ul className="flex gap-3 md:gap-5">
-            {navItems.map((item) => (
-              <li
-                key={item.name}
-                className="text-2xl cursor-pointer text-white hover:text-gray-300"
+            {/* Desktop Nav */}
+            <nav className="hidden md:flex md:items-center md:gap-5">
+              {navItems.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.to}
+                  className="rounded-lg px-2 py-1 text-xl font-semibold text-gray-900"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+
+            {/* Dropdown + Login */}
+            <div className="flex items-center gap-4">
+              <div>
+                <IoSearchOutline className="text-2xl mr-3 cursor-pointer" />
+              </div>
+              <div className="border border-gray-400 rounded-full p-3">
+                <BsHandbag className="text-2xl  cursor-pointer "/>
+              </div>
+              <div
+                ref={buttonRef}
+                onClick={handleDropdown}
+                className="border rounded-full border-gray-400"
               >
-                <Link to={item.path}>{item.name}</Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        {/* Cart */}
-        <div className="flex items-center gap-2 cursor-pointer text-white">
-          <FaOpencart className="text-4xl" />
-          <h2 className="text-2xl">Cart</h2>
+                <img
+                  src="https://avatars.githubusercontent.com/u/26052038?v=4"
+                  className="w-12 h-12 rounded-full cursor-pointer"
+                />
+              </div>
+              <div className="hidden md:flex items-center gap-3">
+                <Link
+                  to="/login"
+                  className="px-6 py-2 border rounded-4xl hover:bg-gradient-to-l from-blue-600 to-white hover:border-gray-100 duration-100 animate-pulse"
+                >
+                  Login
+                </Link>
+              </div>
+              {/* Mobile Menu Icon */}
+              <div className="md:hidden">
+                <button onClick={toggleMenu} className="text-gray-900">
+                  <GiHamburgerMenu className="h-6 w-6" />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-
-        {/* Desktop Sign In Button */}
-        <div className="hidden sm:flex gap-3 md:gap-5 lg:gap-9">
-          <Link
-            to="/login"
-            className="font-bold text-md rounded-[40px] py-1 px-3 md:py-2 md:px-4 lg:px-9 text-[#302c42] bg-gradient-to-r from-[#8176AF] to-[#C0B7E8] hover:bg-primary"
-          >
-            Sign In
-          </Link>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button onClick={toggleMobileMenu} className="sm:hidden inline-block">
-          {mobileOpen ? (
-            <IoClose className="text-4xl text-white" />
-          ) : (
-            <FaBarsStaggered className="text-4xl text-white" />
-          )}
-        </button>
       </header>
 
-      {/* Mobile Menu */}
-      {mobileOpen && (
-        <div className="sm:hidden bg-[#302c42] border-t border-white px-4 pb-4">
-          <ul className="flex flex-col gap-4 my-8">
-            {navItems.map((item) => (
-              <li
-                key={item.name}
-                className="uppercase font-bold text-xs text-white"
-              >
-                <Link to={item.path}>{item.name}</Link>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-4 flex flex-col gap-3">
+      {/* Dropdown Outside Header */}
+      {isDropdownOpen && (
+        <div
+          ref={dropdownRef}
+          className="absolute z-50 top-24 right-10  w-80 bg-white rounded-md shadow-lg p-4"
+        >
+          <div className="flex space-x-4 items-center p-4">
+            <img
+              src="https://avatars.githubusercontent.com/u/26052038?v=4"
+              alt="Name"
+              className="w-16 h-16 shrink-0 rounded-full"
+            />
+            <div className="space-y-1">
+              <div className="font-semibold text-gray-900">Name</div>
+              <p className="text-sm text-gray-600">example@mail.com</p>
+            </div>
+          </div>
+          <div className="border-t pt-2 mt-2">
             <Link
-              to="/login"
-              className="uppercase text-center font-bold text-md rounded-[40px] py-2 px-4 text-[#302c42] bg-gradient-to-r from-[#8176AF] to-[#C0B7E8]"
+              to="/"
+              className="block py-2 px-3 text-gray-800 hover:bg-gray-100 rounded"
+              onClick={() => setIsDropdownOpen(false)}
             >
-              Sign In
+              Панель управления
             </Link>
+            <Link
+              to="/profile"
+              className="block py-2 px-3 text-gray-800 hover:bg-gray-100 rounded"
+              onClick={() => setIsDropdownOpen(false)}
+            >
+              Профиль
+            </Link>
+            <Link
+              to="/accounts"
+              className="block py-2 px-3 text-gray-800 hover:bg-gray-100 rounded"
+              onClick={() => setIsDropdownOpen(false)}
+            >
+              Игровые аккаунты
+            </Link>
+            <button
+              className="block w-full text-left py-2 px-3 text-gray-800 hover:bg-gray-100 rounded"
+              onClick={() => setIsDropdownOpen(false)}
+            >
+              Выход
+            </button>
           </div>
         </div>
       )}
-    </section>
+    </>
   );
-};
+}
 
 export default Header;
