@@ -6,9 +6,13 @@ import Login from "./Authetication/login";
 import Signup from "./Authetication/signup";
 // Pages
 const Home = lazy(() => import("./pages/Home"));
+const Collection = lazy(() => import("./pages/Collection"));
+const PlaceOrder = lazy(() => import("./pages/PlaceOrder"));
 const Product = lazy(() => import("./pages/Product"));
-const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
+const About = lazy(() => import("./pages/About"));
+const Orders = lazy(() => import("./pages/Orders"))
+const Cart = lazy(() => import("./pages/Cart"));
 
 const routing = createBrowserRouter([
   {
@@ -20,7 +24,7 @@ const routing = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "products",
+        path: "product/:productId",
         element: <Product />,
       },
       {
@@ -30,6 +34,22 @@ const routing = createBrowserRouter([
       {
         path: "contact",
         element: <Contact />,
+      },
+      {
+        path: "Collection",
+        element: <Collection />,
+      },
+      {
+        path: "Cart",
+        element: <Cart />,
+      },
+      {
+        path: "Orders",
+        element: <Orders />,
+      },
+      {
+        path: "place-order",
+        element: <PlaceOrder />,
       },
     ],
   },

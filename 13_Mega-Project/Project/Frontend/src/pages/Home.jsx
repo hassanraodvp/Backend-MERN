@@ -1,10 +1,17 @@
 import React from "react";
+import Hero from "../Content/Hero";
+import LatestCollection from "../components/LatestCollection";
+import BestSeller from "../components/BestSeller";
+import NewsLetter from "../components/NewsLetter";
 
 const Home = () => {
   return (
-    <div className="container py-26">
-      <h1 className="bg-primary text-white">Hassan</h1>
-    </div>
+    <>
+      <Hero />
+      <LatestCollection />
+      <BestSeller />
+      <NewsLetter />
+    </>
   );
 };
 

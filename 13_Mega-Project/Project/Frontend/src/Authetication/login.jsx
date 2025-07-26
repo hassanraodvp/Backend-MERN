@@ -1,12 +1,11 @@
 import React from "react";
 import {Link } from "react-router-dom"
 import sideImg from "../assets/Authentication/login_side.webp";
-import bgImage from "../assets/Authentication/login_background.webp"
 
 
 const login = () => {
   return (
-    <section className="bg-cover flex justify-center items-center min-h-screen"  style={{ backgroundImage: `url(${bgImage})` }}>
+    <section className="bg-cover flex justify-center items-center min-h-screen">
       <div className="container">
         <div className="flex justify-center items-center bg-white rounded-lg shadow-xl overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
           <div className="hidden lg:block lg:w-1/2 bg-cover">
