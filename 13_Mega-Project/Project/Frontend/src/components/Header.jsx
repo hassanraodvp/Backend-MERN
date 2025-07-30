@@ -1,10 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { BsHandbag } from "react-icons/bs";
 import navLogo from "../assets/logo/nav_logo.svg";
 import { IoSearchOutline } from "react-icons/io5";
+import { ShopContext } from "../context/ShopContext";
 
 const navItems = [
   { name: "Home", to: "/" },
@@ -20,6 +21,7 @@ function Header() {
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
   const menuRef = useRef(null);
+  const {  setShowSearch } = useContext(ShopContext);
 
   const toggleMenu = () => {
     if (!isMenuOpen) {
@@ -43,12 +45,12 @@ function Header() {
       ) {
         setIsDropdownOpen(false);
       }
-      
+
       // Close mobile menu if clicked outside
       if (
         menuRef.current &&
         !menuRef.current.contains(event.target) &&
-        !document.querySelector('.mobile-menu-button')?.contains(event.target)
+        !document.querySelector(".mobile-menu-button")?.contains(event.target)
       ) {
         setIsAnimating(false);
         setTimeout(() => setIsMenuOpen(false), 300);
@@ -84,12 +86,14 @@ function Header() {
             {/* Dropdown + Login + Search + Cart */}
             <div className="flex items-center gap-2 lg:gap-3 xl:gap-5">
               <div>
-                <IoSearchOutline className="text-2xl md:text-4xl mr-1 md:mr-3 cursor-pointer" />
+                <IoSearchOutline className="text-2xl md:text-4xl mr-1 md:mr-3 cursor-pointer" onClick={() => setShowSearch(true)}/>
               </div>
               <div className="border border-gray-400 rounded-full p-2 md:p-3">
                 <Link to="/Cart" className=" relative">
                   <BsHandbag className="text-lg md:text-2xl  cursor-pointer " />
-                  <p className="absolute font-medium md:font-bold bg-black text-white px-1 md:px-2 md:py-1 py-0 rounded-full  -right-5">99</p>
+                  <p className="absolute font-medium md:font-bold bg-black text-white px-1 md:px-2 md:py-1 py-0 rounded-full  -right-5">
+                    99
+                  </p>
                 </Link>
               </div>
               <div
@@ -112,8 +116,8 @@ function Header() {
               </div>
               {/* Mobile Menu Icon */}
               <div className="md:hidden">
-                <button 
-                  onClick={toggleMenu} 
+                <button
+                  onClick={toggleMenu}
                   className="mobile-menu-button text-white p-2 md:p-3 bg-primary rounded-full"
                 >
                   {isMenuOpen ? (
@@ -133,7 +137,9 @@ function Header() {
         <div
           ref={menuRef}
           className={`fixed inset-0 z-20 pt-30 bg-white transition-all duration-700 ease-in-out ${
-            isAnimating ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full"
+            isAnimating
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 -translate-y-full"
           }`}
         >
           <div className="flex flex-col items-center h-full space-y-6">

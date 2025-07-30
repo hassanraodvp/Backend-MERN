@@ -11,7 +11,7 @@ const PlaceOrder = lazy(() => import("./pages/PlaceOrder"));
 const Product = lazy(() => import("./pages/Product"));
 const Contact = lazy(() => import("./pages/Contact"));
 const About = lazy(() => import("./pages/About"));
-const Orders = lazy(() => import("./pages/Orders"))
+const Orders = lazy(() => import("./pages/Orders"));
 const Cart = lazy(() => import("./pages/Cart"));
 
 const routing = createBrowserRouter([

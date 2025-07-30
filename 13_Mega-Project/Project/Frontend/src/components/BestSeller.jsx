@@ -10,8 +10,6 @@ const BestSeller = () => {
   useEffect(() => {
     const bestProduct = products.filter((item) => item.bestseller);
     setBestSeller(bestProduct.slice(0, 5));
-    console.log("All Products:", products);
-    console.log("Filtered Best Sellers:", bestProduct);
   }, [products]);
   return (
     <div className="pb-10">
@@ -36,28 +34,36 @@ const BestSeller = () => {
             );
           })}
         </div>
-        <Title text1="Our" text2="Policy"/>
+        <Title text1="Our" text2="Policy" />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-[5%]">
           <div className="flex flex-col items-center gap-3 text-center border-b  md:border-0 pb-10">
             <figure>
               <img src={assets.exchange_icon} alt="" />
             </figure>
-            <h2 className="text-xl lg:text-2xl font-bold">Easy Exchange Policy</h2>
-            <p className="w-[90%] lg:w-[60%]">We Offer free exchange policy for our valuable customers.</p>
+            <h2 className="text-xl lg:text-2xl font-bold">
+              Easy Exchange Policy
+            </h2>
+            <p className="w-[90%] lg:w-[60%]">
+              We Offer free exchange policy for our valuable customers.
+            </p>
           </div>
-           <div className="flex flex-col items-center gap-3 text-center border-b md:border-0 pb-10">
+          <div className="flex flex-col items-center gap-3 text-center border-b md:border-0 pb-10">
             <figure>
               <img src={assets.quality_icon} alt="" />
             </figure>
             <h2 className="text-xl lg:text-2xl font-bold">Quality Products</h2>
-            <p className="w-[90%] lg:w-[60%]">We offer the best quality products in the market.</p>
+            <p className="w-[90%] lg:w-[60%]">
+              We offer the best quality products in the market.
+            </p>
           </div>
           <div className="flex flex-col items-center gap-3 text-center">
             <figure>
               <img src={assets.support_img} alt="" />
             </figure>
             <h2 className="text-xl lg:text-2xl font-bold">24/7 Support</h2>
-            <p className="w-[90%] lg:w-[60%]">We are always available to help our customers.</p>
+            <p className="w-[90%] lg:w-[60%]">
+              We are always available to help our customers.
+            </p>
           </div>
         </div>
       </div>
