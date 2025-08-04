@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { RiStarSFill } from "react-icons/ri";
 import RelatedProducts from "../components/relatedProducts";
+import { IoArrowBack } from "react-icons/io5";
+import {Link} from "react-router-dom"
 
 const Product = () => {
   const { productId } = useParams();
-  const { products } = useContext(ShopContext);
+  const { products, currency, addToCart } = useContext(ShopContext);
   const [image, setImage] = useState("");
   const [productData, setProductData] = useState(false);
   const [size, setSize] = useState();
@@ -23,8 +25,7 @@ const Product = () => {
   };
   useEffect(() => {
     fetchProductData();
-    console.log(productData);
-  }, [productId]);
+   }, [productId]);
 
   const description = [
     "This product is good for your health and well-being. It is a good product for your health and well-being. It is a good product for your health and well-being.",
@@ -39,6 +40,9 @@ const Product = () => {
   return productData ? (
     <div className="pb-26 pt-32">
       <div className="container">
+        <Link to="/collection">
+          <IoArrowBack className="text-2xl md:text-4xl cursor-pointer bg-primary rounded-md mb-5 text-white" />
+        </Link>
         {/* Product Data  */}
         <div className="flex flex-col md:flex-row gap-6 md:gap-8">
           {/* products Images  */}
@@ -107,10 +111,11 @@ const Product = () => {
               </div>
             </div>
             <p className="text-secondary text-xl lg:text-2xl font-bold w-[80%] xl:w-[60%] pt-[1%]">
-              <span className="text-lg lg:text-xl font-bold">Price:</span> $
+              <span className="text-lg lg:text-xl font-bold">Price:</span>
+              {currency}
               {productData.price}
             </p>
-            <button className="bg-secondary hover:bg-primary cursor-pointer text-white px-5 py-3 rounded-md">
+            <button onClick={() => addToCart(productData._id, size)} className="bg-secondary hover:bg-primary cursor-pointer text-white px-5 py-3 rounded-md">
               ADD to CART
             </button>
           </div>
@@ -139,9 +144,9 @@ const Product = () => {
             </button>
           </div>
 
-          <div className="flex flex-col border border-gray-200 rounded-md px-5 py-10 mt-3 w-[90%] lg:w-[80%]">
+          <div className="flex flex-col border border-gray-200 rounded-md px-5 py-10 mt-3 w-[100%] lg:w-[80%]">
             {contentToShow.map((text, index) => (
-              <p key={index} className="w-[90%] lg:w-[80%] mb-4">
+              <p key={index} className="w-[100%] lg:w-[80%] mb-4">
                 {text}
               </p>
             ))}

@@ -21,7 +21,7 @@ function Header() {
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
   const menuRef = useRef(null);
-  const {  setShowSearch } = useContext(ShopContext);
+  const {  setShowSearch, getCart } = useContext(ShopContext);
 
   const toggleMenu = () => {
     if (!isMenuOpen) {
@@ -29,7 +29,7 @@ function Header() {
       setIsAnimating(true);
     } else {
       setIsAnimating(false);
-      setTimeout(() => setIsMenuOpen(false), 300); // Match this with your transition duration
+      setTimeout(() => setIsMenuOpen(false), 300); 
     }
   };
 
@@ -92,7 +92,7 @@ function Header() {
                 <Link to="/Cart" className=" relative">
                   <BsHandbag className="text-lg md:text-2xl  cursor-pointer " />
                   <p className="absolute font-medium md:font-bold bg-black text-white px-1 md:px-2 md:py-1 py-0 rounded-full  -right-5">
-                    99
+                    {getCart()}
                   </p>
                 </Link>
               </div>
@@ -105,14 +105,6 @@ function Header() {
                   src="https://avatars.githubusercontent.com/u/26052038?v=4"
                   className="w-9 md:w-12 md:h-12 h-9 rounded-full cursor-pointer"
                 />
-              </div>
-              <div className="hidden md:flex items-center gap-3">
-                <Link
-                  to="/login"
-                  className="px-6 py-2 border rounded-full hover:bg-gradient-to-l from-blue-600 to-white hover:border-gray-100 transition-all duration-300"
-                >
-                  Login
-                </Link>
               </div>
               {/* Mobile Menu Icon */}
               <div className="md:hidden">
@@ -203,11 +195,11 @@ function Header() {
               Orders
             </Link>
             <Link
-              to="/accounts"
-              className="block w-full flex justify-center py-2 px-3 text-white font-bold mt-5 bg-red-600 hover:bg-red-500 rounded-md"
+              to="/login"
+              className="block w-full flex justify-center py-2 px-3 text-white font-bold mt-5 bg-blue-600 hover:bg-blue-500 rounded-md"
               onClick={() => setIsDropdownOpen(false)}
             >
-              LOGOUT
+              Log In
             </Link>
           </div>
         </div>

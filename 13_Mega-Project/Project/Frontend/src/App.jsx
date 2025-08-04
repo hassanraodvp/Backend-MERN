@@ -1,9 +1,13 @@
 import React, { Suspense, lazy } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import ShopContextProvider from "./context/ShopContext.jsx";
+import "react-toastify/dist/ReactToastify.css";
 import Layout from "./components/layout";
 import Loader from "./components/Loader";
 import Login from "./Authetication/login";
 import Signup from "./Authetication/signup";
+import Checkout from "./pages/Checkout.jsx";
 // Pages
 const Home = lazy(() => import("./pages/Home"));
 const Collection = lazy(() => import("./pages/Collection"));
@@ -51,6 +55,10 @@ const routing = createBrowserRouter([
         path: "place-order",
         element: <PlaceOrder />,
       },
+      {
+        path: "checkout",
+        element: <Checkout />,
+      },
     ],
   },
   {
@@ -65,9 +73,14 @@ const routing = createBrowserRouter([
 
 const App = () => {
   return (
-    <Suspense fallback={<Loader />}>
-      <RouterProvider router={routing} />
-    </Suspense>
+    <>
+      <ToastContainer />
+      <Suspense fallback={<Loader />}>
+        <ShopContextProvider>
+          <RouterProvider router={routing} />
+        </ShopContextProvider>
+      </Suspense>
+    </>
   );
 };
 

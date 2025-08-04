@@ -2,11 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const signup = () => {
+  const onsubmitHandler = async (e) => {
+    e.preventDefault();
+  }
   return (
     <section className="bg-cover flex justify-center items-center min-h-screen">
       <div className="container">
         <div className="flex justify-center items-center bg-white rounded-lg shadow-xl overflow-hidden mx-auto max-w-sm lg:max-w-md">
-          <div className="w-full p-8">
+          <form className="w-full p-8" onSubmit={onsubmitHandler}>
             <h2 className="text-4xl font-bold text-primary text-center">
               Signup
             </h2>
@@ -50,7 +53,7 @@ const signup = () => {
               />
             </div>
             <div className="mt-8">
-              <button className="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">
+              <button className="bg-gray-700 text-white font-bold cursor-pointer py-2 px-4 w-full rounded hover:bg-gray-600">
                 Signup
               </button>
             </div>
@@ -64,7 +67,7 @@ const signup = () => {
               </Link>
               <span className="border-b w-1/5 md:w-1/4"></span>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </section>
