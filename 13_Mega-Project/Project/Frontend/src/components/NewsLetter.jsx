@@ -19,15 +19,15 @@ const NewsLetter = () => {
             <form
             onSubmit={onSubmitHandler}
               action="#"
-              className="my-4 sm:flex sm:flex-row sm:justify-evenly"
+              className="my-4 w-full flex sm:justify-evenly"
             >
               <input
-                className=" block w-full px-4 py-3 text-gray-800 placeholder-gray-500 bg-white border border-gray-300  rounded-tl-xl  rounded-bl-xl focus:outline-none"
+                className=" block w-full px-4 py-2 md:py-3 text-gray-800 placeholder-gray-500 bg-white border border-gray-300 rounded-tl-xl  rounded-bl-xl focus:outline-none"
                 type="email"
                 placeholder="Enter your email"
                 required
               />
-              <button type="submit" className="bg-blue-600 cursor-pointer hover:bg-blue-500 block w-full py-3 font-bold rounded-tr-xl rounded-br-xl shadow md:w-52 text-white">
+              <button type="submit" className="bg-blue-600 cursor-pointer hover:bg-blue-500 block w-40 py-2 md:py-3 font-bold rounded-tr-xl rounded-br-xl shadow md:w-52 text-white">
                 <span className="block ">Subscribe</span>
               </button>
             </form>
