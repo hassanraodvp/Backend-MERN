@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+/* Urbanist Font  */
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
+
+@theme {
+  --color-primary: #1b3c53;
+  --color-secondary: #456882;
+  --color-heading: #d2c1b6;
+  --color-white: #f8f8f8;
+}
+
+@body {
+  font-family: "Urbanist", sans-serif;
+}
+
+@media only screen and (min-width: 1350px) {
+  .container {
+    padding: 0 25px !important;
+  }
+}
+
+@media only screen and (max-width: 1350px) {
+  .container {
+    padding: 0 25px !important;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .container {
+    padding: 0 15px !important;
+  }
+}
+
+.container {
+  margin: auto;
+}
+
+.active{
+  color: red;
+}
