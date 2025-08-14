@@ -1,13 +1,8 @@
 import { useState, useRef, useEffect, useContext } from "react";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { IoMdClose } from "react-icons/io";
 import { Link } from "react-router-dom";
-import { BsHandbag } from "react-icons/bs";
 import navLogo from "../assets/logo/nav_logo.svg";
-import { IoSearchOutline } from "react-icons/io5";
-// import { ShopContext } from "../context/ShopContext";
-
-const navItems = [{ name: "Add Item", to: "/add" }];
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Header({ setToken }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,6 +11,7 @@ function Header({ setToken }) {
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
   const menuRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleDropdown = () => setIsDropdownOpen((prev) => !prev);
 
@@ -43,6 +39,13 @@ function Header({ setToken }) {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleLogout = () => {
+    setToken("");
+    localStorage.removeItem("token");
+    toast.success("Logout successful");
+    navigate("/login");
+  };
 
   return (
     <>
@@ -97,16 +100,9 @@ function Header({ setToken }) {
             >
               My Profile
             </Link>
-            <Link
-              to="/orders"
-              className="block py-2 px-3 text-primary hover:bg-gray-200 rounded"
-              onClick={() => setIsDropdownOpen(false)}
-            >
-              Orders
-            </Link>
             <button
-              onClick={() => setToken("")}
-              className="block w-full flex justify-center py-2 px-3 text-white font-bold mt-5 bg-red-600 hover:bg-red-500 rounded-md"
+              onClick={handleLogout}
+              className="block w-full flex justify-center py-2 px-3 text-white cursor-pointer font-bold mt-5 bg-red-600 hover:bg-red-500 rounded-md"
             >
               {" "}
               Log Out

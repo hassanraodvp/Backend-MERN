@@ -1,13 +1,13 @@
 import React, { Suspense, lazy } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import ShopContextProvider from "./context/ShopContext.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import Layout from "./components/layout";
 import Loader from "./components/Loader";
 import Login from "./Authetication/login";
 import Signup from "./Authetication/signup";
 import Checkout from "./pages/Checkout.jsx";
+import ShopContextProvider from "./context/ShopContext";
 // Pages
 const Home = lazy(() => import("./pages/Home"));
 const Collection = lazy(() => import("./pages/Collection"));
@@ -75,11 +75,11 @@ const App = () => {
   return (
     <>
       <ToastContainer />
-      <Suspense fallback={<Loader />}>
-        <ShopContextProvider>
+      <ShopContextProvider>
+        <Suspense fallback={<Loader />}>
           <RouterProvider router={routing} />
-        </ShopContextProvider>
-      </Suspense>
+        </Suspense>
+      </ShopContextProvider>
     </>
   );
 };

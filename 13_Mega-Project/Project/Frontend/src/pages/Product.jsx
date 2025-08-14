@@ -5,6 +5,7 @@ import { RiStarSFill } from "react-icons/ri";
 import RelatedProducts from "../components/relatedProducts";
 import { IoArrowBack } from "react-icons/io5";
 import {Link} from "react-router-dom"
+import { toast } from "react-toastify";
 
 const Product = () => {
   const { productId } = useParams();
@@ -27,6 +28,12 @@ const Product = () => {
     fetchProductData();
    }, [productId]);
 
+  const handleAddToCart = () => {
+    addToCart(productData._id, size);
+    if(size){
+      toast.success("Product added to cart");
+    }
+  };
   const description = [
     "This product is good for your health and well-being. It is a good product for your health and well-being. It is a good product for your health and well-being.",
     "We also provide free delivery and 30 days return policy. If you're not satisfied, you can return within 30 days and get your money back.",
@@ -115,7 +122,7 @@ const Product = () => {
               {currency}
               {productData.price}
             </p>
-            <button onClick={() => addToCart(productData._id, size)} className="bg-secondary hover:bg-primary cursor-pointer text-white px-5 py-3 rounded-md">
+            <button onClick={handleAddToCart} className="bg-secondary hover:bg-primary cursor-pointer text-white px-5 py-3 rounded-md">
               ADD to CART
             </button>
           </div>

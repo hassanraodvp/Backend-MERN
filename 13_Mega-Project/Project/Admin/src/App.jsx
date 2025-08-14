@@ -13,12 +13,14 @@ const List = React.lazy(() => import("./pages/List.jsx"));
 const Order = React.lazy(() => import("./pages/Order.jsx"));
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
+export const currency = import.meta.env.CURRENCY;
 const App = () => {
-  const [token, setToken] = useState(localStorage.getItem('token')?localStorage.getItem('token'):'');
-  useEffect(()=> {
-    localStorage.setItem('token', token)
-  }, [token])
+  const [token, setToken] = useState(
+    localStorage.getItem("token") ? localStorage.getItem("token") : ""
+  );
+  useEffect(() => {
+    localStorage.setItem("token", token);
+  }, [token]);
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -32,14 +34,14 @@ const App = () => {
           </Routes>
         ) : (
           <>
-            <Header />
+            <Header setToken={setToken} />
             <div className="flex md:flex-row flex-col w-full">
               <SideBar />
               <div className="w-full md:w-[70%] ml-[max(5vw, 25px)]">
                 <Routes>
-                  <Route path="/add" element={<Add token={token}/>} />
-                  <Route path="/list" element={<List  token={token}/>} />
-                  <Route path="/order" element={<Order  token={token}/>} />
+                  <Route path="/add" element={<Add token={token} />} />
+                  <Route path="/list" element={<List token={token} />} />
+                  <Route path="/order" element={<Order token={token} />} />
                   <Route path="*" element={<Navigate to="/add" replace />} />
                 </Routes>
               </div>

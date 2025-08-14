@@ -13,4 +13,5 @@ productRouter.post('/remove', adminAuth ,removeProducts)
 // Route for Single Product
 productRouter.post('/single', singleProduct)
 
+
 export default productRouter

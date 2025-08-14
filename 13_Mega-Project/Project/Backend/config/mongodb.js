@@ -9,7 +9,7 @@ const connectDB = async () => {
     console.warn("MongoDB disconnected");
   });
   try {
-    await mongoose.connect(`${process.env.MONGODB_URI}/E-Commerce`);
+    await mongoose.connect(`${process.env.MONGODB_URI}`);
     console.log("MongoDB Connected")
   } catch (error) {
     console.error("MongoDB connection failed:", error.message);

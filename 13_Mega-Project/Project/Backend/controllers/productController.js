@@ -5,7 +5,7 @@ const addProducts = async (req, res) => {
   try {
     const {
       name,
-      description,
+      desc,
       price,
       category,
       subCategory,
@@ -31,7 +31,7 @@ const addProducts = async (req, res) => {
     );
     const productData = {
       name,
-      description,
+      desc,
       category,
       subCategory,
       price: Number(price),
@@ -40,7 +40,7 @@ const addProducts = async (req, res) => {
       image: imageURL,
       date: Date.now(),
     };
-    console.log(productData);
+      console.log("Sending product data:", productData);
     const product = new productModel(productData);
     await product.save();
     res.json({ success: true, message: "Product Added" });

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsHandbag } from "react-icons/bs";
 import navLogo from "../assets/logo/nav_logo.svg";
 import { IoSearchOutline } from "react-icons/io5";
@@ -21,7 +21,8 @@ function Header() {
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
   const menuRef = useRef(null);
-  const {  setShowSearch, getCart } = useContext(ShopContext);
+  const navigate = useNavigate();
+  const {  setShowSearch, getCart, token, setToken, setCartItems } = useContext(ShopContext);
 
   const toggleMenu = () => {
     if (!isMenuOpen) {
@@ -59,6 +60,13 @@ function Header() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleLogout = () => {
+    setToken(null);
+    setCartItems([]);
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   return (
     <>
@@ -150,13 +158,10 @@ function Header() {
             ))}
             <Link
               to="/login"
-              className="w-[90%] mt-8 px-8 py-3 text-xl font-bold flex justify-center border-2 rounded-full hover:bg-gradient-to-l from-blue-600 to-white hover:border-gray-100 transition-all duration-300"
-              onClick={() => {
-                setIsAnimating(false);
-                setTimeout(() => setIsMenuOpen(false), 300);
-              }}
+              className="w-[90%] mt-8 px-8 py-3 text-xl font-bold flex justify-center border-2 rounded-full hover:bg-gradient-to-l from-red-700 to-red-500 hover:border-red-100 transition-all duration-300"
+              onClick={handleLogout}
             >
-              Login
+              Logout
             </Link>
           </div>
         </div>
@@ -188,7 +193,7 @@ function Header() {
               My Profile
             </Link>
             <Link
-              to="/orders"
+              to="/checkout"
               className="block py-2 px-3 text-primary hover:bg-gray-200 rounded"
               onClick={() => setIsDropdownOpen(false)}
             >
@@ -196,10 +201,10 @@ function Header() {
             </Link>
             <Link
               to="/login"
-              className="block w-full flex justify-center py-2 px-3 text-white font-bold mt-5 bg-blue-600 hover:bg-blue-500 rounded-md"
-              onClick={() => setIsDropdownOpen(false)}
+              className="block w-full flex justify-center py-2 px-3 text-white font-bold mt-5 bg-red-700 hover:bg-red-500 rounded-md"
+              onClick={handleLogout}
             >
-              Log In
+              Logout
             </Link>
           </div>
         </div>

@@ -1,8 +1,8 @@
 import { createContext, useEffect } from "react";
-import { products } from "../assets/Products/assets";
 import React from "react";
 import { toast } from "react-toastify";
 export const ShopContext = createContext();
+import axios from "axios";
 
 const ShopContextProvider = (props) => {
   const currency = "$";
@@ -10,6 +10,9 @@ const ShopContextProvider = (props) => {
   const [search, setSearch] = React.useState("");
   const [showSearch, setShowSearch] = React.useState(false);
   const [cartItems, setCartItems] = React.useState({});
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const [token, setToken] = React.useState("");
+  const [products, setProducts] = React.useState([]);
   const addToCart = async (itemId, size) => {
     if (!size) {
       toast.error("Select the Size");
@@ -51,7 +54,7 @@ const ShopContextProvider = (props) => {
       }
     }
     setCartItems(cartData);
-  }
+  };
   const totalCartAmount = () => {
     let totalAmount = 0;
     for (const items in cartItems) {
@@ -65,8 +68,33 @@ const ShopContextProvider = (props) => {
       }
     }
     return totalAmount;
-  }
+  };
 
+  const getProductData = async () => {
+    try {
+      console.log("Fetching products from:", `${backendUrl}/api/product/list`);
+      const response = await axios.get(`${backendUrl}/api/product/list`);
+      console.log("Response:", response.data);
+      if (response.data.success) {
+        setProducts(response.data.products);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.log("Error fetching products:", error);
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getProductData();
+  }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setToken(token);
+    }
+  }, []);
   const value = {
     products: products,
     currency: currency,
@@ -76,10 +104,14 @@ const ShopContextProvider = (props) => {
     showSearch: showSearch,
     setShowSearch: setShowSearch,
     cartItems: cartItems,
+    setCartItems: setCartItems,
     addToCart: addToCart,
     getCart: getCart,
     updateCart: updateCart,
     totalCartAmount: totalCartAmount,
+    backendUrl,
+    token,
+    setToken,
   };
   return (
     <ShopContext.Provider value={value}>{props.children}</ShopContext.Provider>

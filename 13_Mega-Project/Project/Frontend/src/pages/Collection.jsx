@@ -55,7 +55,7 @@ const Collection = () => {
   };
   useEffect(() => {
     applyFilter();
-  }, [category, subCategory, search, showSearch]);
+  }, [category, subCategory, search, showSearch, products]);
 
   const sortProduct = () => {
     let sortCopy = products.slice();

@@ -64,16 +64,32 @@ const registerUser = async (req, res) => {
 };
 // Route for Admin
 const adminUser = async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Email and password are required" });
+  }
+
   try {
-    const {email , password} = req.body;
-    if(email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASS) {
-      const token = jwt.sign(email+password, process.env.JWT_SECRET);
-      res.json({success: true, token})
+    if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASS) {
+      // create token with a payload (object), not a raw string
+      const token = jwt.sign(
+        { role: "admin", email: process.env.ADMIN_EMAIL },
+        process.env.JWT_SECRET,
+        { expiresIn: "2h" }
+      );
+      return res.json({ success: true, token });
+    } else {
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid admin credentials" });
     }
   } catch (error) {
-    console.log(error)
-    res.json({success: false, message: error.message})
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
+
 
 export { loginUser, registerUser, adminUser };

@@ -1,11 +1,39 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import sideImg from "../assets/Authentication/login_side.webp";
+import { ShopContext } from "../context/ShopContext";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const login = () => {
+  const { token, setToken, backendUrl } = useContext(ShopContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   const onsubmitHandler = async (e) => {
     e.preventDefault();
-  }
+    try {
+      const response = await axios.post(`${backendUrl}/api/user/login`, {
+        email,
+        password,
+      });
+      if (response.data.success) {
+        setToken(response.data.token);
+        localStorage.setItem("token", response.data.token);
+        toast.success("Login successful");
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, [token]);
   return (
     <section className="bg-cover flex justify-center items-center min-h-screen">
       <div className="container">
@@ -34,6 +62,8 @@ const login = () => {
                 className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
                 placeholder="Enter E-mail"
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="mt-4">
@@ -46,9 +76,11 @@ const login = () => {
                 className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
                 placeholder="Enter Your Password"
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="mt-8"> 
+            <div className="mt-8">
               <button className="bg-gray-700 cursor-pointer text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">
                 Login
               </button>
